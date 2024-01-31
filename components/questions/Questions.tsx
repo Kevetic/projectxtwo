@@ -19,7 +19,7 @@ function Questions({ questionsArray, choices }: QuestionsProps) {
 
   return (
     <div className="space-y-24 h-full flex flex-col justify-center items-center">
-      <h1 className="text-center text-5xl">{questionsArray}?</h1>
+      <h1 className="text-center text-5xl">{questionsArray}</h1>
       <ul className="grid grid-cols-2 gap-20 text-2xl text-center cursor-pointer">
         {choices.map((choice, i) => {
           return (

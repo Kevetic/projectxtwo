@@ -9,6 +9,7 @@ export const useGetQuestions = () => {
 
   const parseOpenAIResponse = (response: any) => {
     const lines = response.split("\n");
+    console.log(lines);
 
     const question = lines[0].replace("Question: ", "");
 
@@ -28,16 +29,14 @@ export const useGetQuestions = () => {
 
   const getQuestions = async (message: string) => {
     try {
-      const requestQuestion = `send me an intermediate question on ${message} following this exact template:
+      const requestQuestion = `send me an intermediate question on ${message} following this template with the answer having an '*' after it:
       
       Question: [Your question goes here]
 
         1. [Option 1]
         2. [Option 2]
         3. [Option 3]
-        4. [Option 4]
-        
-        The answer with have a * following it`;
+        4. [Option 4]`;
 
       const url = "https://api.openai.com/v1/chat/completions";
       const headers = {
@@ -54,10 +53,8 @@ export const useGetQuestions = () => {
       const response = await axios.post(url, data, { headers: headers });
       const res = response.data.choices[0].message.content;
 
-      // Parse OpenAI response
       const parsedData = parseOpenAIResponse(res);
 
-      // Update state
       setChoices(parsedData.choices);
       setQuestionsArray(parsedData.question);
     } catch (error) {
