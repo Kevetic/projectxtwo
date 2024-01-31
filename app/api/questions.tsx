@@ -6,11 +6,10 @@ export const useGetQuestions = () => {
   const [choices, setChoices] = useState([]);
   const [quizzTopic, setQuizzTopic] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [correctAnswer, setCorrectAnswer] = useState("");
 
   const getQuestions = async (message: string) => {
     try {
-      let requestQuestion = `send me an intermediate question on ${message} following these patters: Multiple choice question, Only 4 options. give me another option as the answer`;
+      let requestQuestion = `send me an intermediate question on ${message} following these patters: Multiple choice question, Only 4 options. add an '*' at the end of the correct answer,`;
       const url = "https://api.openai.com/v1/chat/completions";
       const headers = {
         "Content-type": "application/json",
@@ -51,7 +50,6 @@ export const useGetQuestions = () => {
     getQuestions,
     setQuizzTopic,
     choices,
-    setCorrectAnswer,
-    correctAnswer,
+    setIsLoading,
   };
 };

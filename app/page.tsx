@@ -1,10 +1,7 @@
 "use client";
-import { useState } from "react";
-import axios from "axios";
 import { ModeToggle } from "@/components/modeToggle";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { useGetQuestions } from "./api/questions";
 import Questions from "@/components/questions/Questions";
 
@@ -15,8 +12,7 @@ export default function Home() {
     setQuizzTopic,
     questionsArray,
     choices,
-    setCorrectAnswer,
-    correctAnswer,
+    setIsLoading,
   } = useGetQuestions();
 
   return (
@@ -33,18 +29,16 @@ export default function Home() {
           />
           <Button
             className="w-3/2 border rounded-lg p-2 bg-primary"
-            onClick={() => getQuestions(quizzTopic)}
+            onClick={() => {
+              setIsLoading(true);
+              getQuestions(quizzTopic);
+            }}
           >
             SUBMIT
           </Button>
         </div>
       ) : (
-        <Questions
-          questionsArray={questionsArray}
-          choices={choices}
-          setCorrectAnswer={setCorrectAnswer}
-          correctAnswer={correctAnswer}
-        />
+        <Questions questionsArray={questionsArray} choices={choices} />
       )}
     </main>
   );
