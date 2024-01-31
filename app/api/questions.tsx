@@ -7,9 +7,38 @@ export const useGetQuestions = () => {
   const [quizzTopic, setQuizzTopic] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  const parseOpenAIResponse = (response: any) => {
+    const lines = response.split("\n");
+
+    const question = lines[0].replace("Question: ", "");
+
+    const choices = lines
+      .slice(2, 6)
+      .map((line: any) => line.replace(/^\d\. /, ""));
+
+    const answerMatch = lines[6]?.match(/Answer: (\d+)/);
+    const answer = answerMatch ? parseInt(answerMatch[1]) : null;
+
+    return {
+      question,
+      choices,
+      answer,
+    };
+  };
+
   const getQuestions = async (message: string) => {
     try {
-      let requestQuestion = `send me an intermediate question on ${message} following these patters: Multiple choice question, Only 4 options. add an '*' at the end of the correct answer,`;
+      const requestQuestion = `send me an intermediate question on ${message} following this exact template:
+      
+      Question: [Your question goes here]
+
+        1. [Option 1]
+        2. [Option 2]
+        3. [Option 3]
+        4. [Option 4]
+        
+        The answer with have a * following it`;
+
       const url = "https://api.openai.com/v1/chat/completions";
       const headers = {
         "Content-type": "application/json",
@@ -23,19 +52,14 @@ export const useGetQuestions = () => {
       setIsLoading(true);
 
       const response = await axios.post(url, data, { headers: headers });
-      let res = response.data.choices[0].message.content;
-      let splitData = res.split("?");
-      let cleanedData = splitData.map((data: any) => {
-        return data.replace(/[\n\\]/g, "");
-      });
+      const res = response.data.choices[0].message.content;
 
-      const choicesArray = cleanedData[1].split(/(?=[A-Z]\))/);
-      const filteredChoicesArray = choicesArray.filter(
-        (choice: any) => choice.trim() !== ""
-      );
+      // Parse OpenAI response
+      const parsedData = parseOpenAIResponse(res);
 
-      setChoices(filteredChoicesArray);
-      setQuestionsArray(cleanedData[0]);
+      // Update state
+      setChoices(parsedData.choices);
+      setQuestionsArray(parsedData.question);
     } catch (error) {
       console.error("Error fetching questions:", error);
     } finally {
