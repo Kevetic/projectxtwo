@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useGetQuestions } from "./api/questions";
 import Questions from "@/components/questions/Questions";
+import { ReloadIcon } from "@radix-ui/react-icons";
 
 export default function Home() {
   const {
@@ -13,6 +14,7 @@ export default function Home() {
     questionsArray,
     choices,
     setIsLoading,
+    isLoading,
   } = useGetQuestions();
 
   return (
@@ -27,15 +29,22 @@ export default function Home() {
             className="text-center"
             onChange={(e) => setQuizzTopic(e.target.value)}
           />
-          <Button
-            className="w-3/2 border rounded-lg p-2 bg-primary"
-            onClick={() => {
-              setIsLoading(true);
-              getQuestions(quizzTopic);
-            }}
-          >
-            SUBMIT
-          </Button>
+          {isLoading ? (
+            <Button disabled>
+              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button
+              className="w-3/2 border rounded-lg p-2 bg-primary"
+              onClick={() => {
+                setIsLoading(true);
+                getQuestions(quizzTopic);
+              }}
+            >
+              SUBMIT
+            </Button>
+          )}
         </div>
       ) : (
         <Questions questionsArray={questionsArray} choices={choices} />
