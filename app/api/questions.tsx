@@ -10,6 +10,7 @@ export const useGetQuestions = () => {
   const parseOpenAIResponse = (response: any) => {
     const lines = response.split("\n");
     const question = lines[0].replace("Question: ", "");
+    console.log(lines);
 
     const choices = lines
       .slice(2, 6)
@@ -27,14 +28,16 @@ export const useGetQuestions = () => {
 
   const getQuestions = async (message: string) => {
     try {
-      const requestQuestion = `send me an intermediate question on ${message} following this template with the answer having an '*' after it:
-      
-      Question: [Your question goes here]
+      const requestQuestion = `Please provide an intermediate question related to ${message} using the following format:
 
-        1. [Option 1]
-        2. [Option 2]
-        3. [Option 3]
-        4. [Option 4]`;
+      "Question: [Your question goes here]
+      
+      [Option 1]
+      [Option 2]
+      [Option 3]
+      [Option 4]*
+      "
+      Ensure that the correct answer is not always option 4, and mark the correct answer with an "*" at the end.`;
 
       const url = "https://api.openai.com/v1/chat/completions";
       const headers = {
