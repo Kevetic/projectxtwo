@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "../ui/button";
-import { ReloadIcon } from "@radix-ui/react-icons";
+import { ReloadIcon, CrossCircledIcon } from "@radix-ui/react-icons";
 
 interface QuestionsProps {
   questionsArray: any[];
@@ -25,26 +25,31 @@ function Questions({
     null
   );
   const [correctChoice, setCorrectChoice] = useState(false);
+  const [incorrect, setIncorrect] = useState(false);
 
+  console.log("selected index:", selectedItemIndex);
   const handleSelection = (index: number) => {
     if (choices[index].includes("*")) {
       setCorrectChoice(true);
       setSelectedItemIndex(index);
     } else {
+      setIncorrect(true);
       setSelectedItemIndex(index);
+      setTimeout(() => {
+        setIncorrect(false);
+      }, 1500);
     }
   };
 
   const handleNextQuestion = () => {
     setIsLoading(true);
-    setSelectedItemIndex(null);
     setCorrectChoice(false);
     setIsLoading(true);
     getQuestions(quizzTopic);
   };
 
   return (
-    <div className="space-y-24 h-3/5 flex flex-col justify-center items-center border w-11/12 md:w-3/5 rounded-2xl relative">
+    <div className="space-y-5 md:space-y-24 md:h-3/5 flex flex-col justify-center items-center md:border w-11/12 md:w-3/5 rounded-2xl relative">
       <>
         {isLoading ? (
           <h1>Loading...</h1>
@@ -54,20 +59,12 @@ function Questions({
             <h1 className="text-center text-lg md:text-3xl w-4/5">
               {questionsArray}
             </h1>
-            <ul className="space-y-5 md:gap-20 text-md lg:text-2xl text-center w-11/12 md:w-4f/5">
+            <ul className="md:space-y-5 md:gap-20 text-md lg:text-2xl text-center w-11/12 md:w-4/5">
               {choices.map((choice, i) => (
                 <li key={i}>
                   <Button
-                    disabled={correctChoice}
-                    className={`${
-                      selectedItemIndex === i && !correctChoice
-                        ? "bg-red-500 text-secondary"
-                        : ""
-                    } ${
-                      correctChoice && selectedItemIndex === i
-                        ? "bg-green-500"
-                        : ""
-                    } cursor-pointer border p-5 rounded-xl w-full`}
+                    disabled={correctChoice || incorrect}
+                    className={` cursor-pointer border p-5 rounded-xl w-full hover:bg-muted-foreground`}
                     onClick={() => handleSelection(i)}
                   >
                     {choice.replace(/\*/g, "")}
@@ -79,8 +76,8 @@ function Questions({
         )}
       </>
       {correctChoice ? (
-        <div className="absolute bottom-10 justify-center items-center text-center space-y-4">
-          <span>BINGO</span>
+        <div className="justify-center items-center text-center space-y-5">
+          <span className="text-green-500 text-3xl animate-pulse">BINGO</span>
           <div className="flex gap-5">
             <Button variant="destructive" onClick={() => setQuestionsArray([])}>
               New Subject
@@ -90,6 +87,11 @@ function Questions({
             </Button>
           </div>
         </div>
+      ) : null}
+      {incorrect ? (
+        <span className="absolute -bottom-20 md:bottom-10 animate-bounce text-red-500">
+          Try Again
+        </span>
       ) : null}
     </div>
   );
