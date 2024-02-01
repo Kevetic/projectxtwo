@@ -9,8 +9,6 @@ export const useGetQuestions = () => {
 
   const parseOpenAIResponse = (response: any) => {
     const lines = response.split("\n");
-    console.log(lines);
-
     const question = lines[0].replace("Question: ", "");
 
     const choices = lines
