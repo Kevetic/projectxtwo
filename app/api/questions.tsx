@@ -2,7 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 export const useGetQuestions = () => {
-  const [questionsArray, setQuestionsArray] = useState([]);
+  const [questionsArray, setQuestionsArray] = useState<string[]>([]);
   const [choices, setChoices] = useState([]);
   const [quizzTopic, setQuizzTopic] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -72,5 +72,6 @@ export const useGetQuestions = () => {
     setQuizzTopic,
     choices,
     setIsLoading,
+    setQuestionsArray,
   };
 };

@@ -15,16 +15,17 @@ export default function Home() {
     choices,
     setIsLoading,
     isLoading,
+    setQuestionsArray,
   } = useGetQuestions();
 
   return (
-    <main className="flex flex-col items-center space-y-10">
-      <div className="absolute right-0 p-5">
+    <main className="flex flex-col items-center space-y-10 justify-around h-screen">
+      <div className="absolute right-0 p-5 top-0">
         <ModeToggle />
       </div>
       {questionsArray.length == 0 ? (
-        <div className="space-y-5 flex flex-col justify-center items-center">
-          <h1>What would you liked to be quizzed on?</h1>
+        <div className="space-y-5 flex flex-col justify-center items-center border p-10 rounded-xl w-11/12 md:w-1/2 h-1/2">
+          <h1 className="text-center">What would you like to test on?</h1>
           <Input
             className="text-center"
             onChange={(e) => setQuizzTopic(e.target.value)}
@@ -47,7 +48,15 @@ export default function Home() {
           )}
         </div>
       ) : (
-        <Questions questionsArray={questionsArray} choices={choices} />
+        <Questions
+          questionsArray={questionsArray}
+          choices={choices}
+          setQuestionsArray={setQuestionsArray}
+          setIsLoading={setIsLoading}
+          isLoading={isLoading}
+          quizzTopic={quizzTopic}
+          getQuestions={getQuestions}
+        />
       )}
     </main>
   );
