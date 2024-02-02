@@ -36,15 +36,18 @@ export default function Home() {
               Please wait
             </Button>
           ) : (
-            <Button
-              className="w-3/2 border rounded-lg p-2 bg-primary"
-              onClick={() => {
-                setIsLoading(true);
-                getQuestions(quizzTopic);
-              }}
-            >
-              SUBMIT
-            </Button>
+            <>
+              <Button
+                className="w-3/2 border rounded-lg p-2 bg-primary"
+                onClick={() => {
+                  setIsLoading(true);
+                  getQuestions(quizzTopic);
+                }}
+              >
+                SUBMIT
+              </Button>
+              
+            </>
           )}
         </div>
       ) : (
