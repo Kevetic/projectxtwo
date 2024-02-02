@@ -1,8 +1,7 @@
 import { connectToDatabase } from "@/helpers/server-helpers";
 import { NextResponse } from "next/server";
-import { PrismaClient, Prisma } from "@prisma/client";
+import prisma from "@/lib/db";
 
-const prisma = new PrismaClient();
 export async function POST(req: Request) {
   try {
     const { name, email, image, username, password } = await req.json();
