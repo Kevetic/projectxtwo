@@ -5,40 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useGetQuestions } from "./api/questions";
 import Questions from "@/components/questions/Questions";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { signOut, useSession } from "next-auth/react";
 
 export default function Home() {
-  const { data: session } = useSession();
-  // let email = session?.user?.email;
-  // let name = session?.user?.name;
-  // let image = session?.user?.image;
-  // let username = session?.user?.name;
-  // let password = session?.user?.name;
-
-  // const getUser = async () => {
-  //   try {
-  //     const res = await fetch("/api/register", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         name,
-  //         email,
-  //         image,
-  //         username,
-  //         password,
-  //       }),
-  //     });
-
-  //     if (res.ok) {
-  //       console.log("Registration Complete");
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
   const {
     quizzTopic,
     getQuestions,
@@ -53,7 +21,6 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center space-y-10 justify-around h-screen">
       <div className="absolute right-0 p-5 top-0 items-center justify-center gap-2 flex">
-        {/* <Button onClick={() => signOut()}> Sign Out</Button> */}
         <ModeToggle />
       </div>
       {questionsArray.length == 0 ? (
@@ -79,14 +46,7 @@ export default function Home() {
               >
                 SUBMIT
               </Button>
-              {/* <Button
-                className="w-3/2 border rounded-lg p-2 bg-primary"
-                onClick={() => {
-                  getUser();
-                }}
-              >
-                TEST
-              </Button> */}
+              
             </>
           )}
         </div>
