@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useGetQuestions } from "./api/questions";
 import Questions from "@/components/questions/Questions";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { signIn, signOut, useSession } from "next-auth/react";
-import { useEffect } from "react";
+import { signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
@@ -14,6 +13,8 @@ export default function Home() {
   let email = session?.user?.email;
   let name = session?.user?.name;
   let image = session?.user?.image;
+  let username = session?.user?.username;
+  let password = session?.user?.password;
 
   const getUser = async () => {
     try {
@@ -26,13 +27,15 @@ export default function Home() {
           name,
           email,
           image,
+          username,
+          password,
         }),
       });
 
       console.log(res);
 
       if (res.ok) {
-        console.log(name, email, image);
+        console.log(name, email, image, username, password);
       }
     } catch (error) {
       console.log(error);

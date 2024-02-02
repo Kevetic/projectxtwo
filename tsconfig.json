@@ -27,7 +27,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "loading.jsx",
-    "app/api/register/route.jsx"
+    "app/api/register/route.ts"
   ],
   "exclude": ["node_modules"]
 }

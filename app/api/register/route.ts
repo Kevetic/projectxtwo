@@ -11,6 +11,8 @@ export async function POST(req: Request) {
         name,
         email,
         image,
+        username,
+        password,
       },
     });
     console.log(newUser);
