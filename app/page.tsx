@@ -24,8 +24,6 @@ export default function Home() {
           name,
           email,
           image,
-          username: null,
-          password: null,
         }),
       });
 
