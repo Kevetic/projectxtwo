@@ -4,7 +4,7 @@ import prisma from "@/lib/db";
 
 export async function POST(req: Request) {
   try {
-    const { name, email, image } = await req.json();
+    const { name, email, image, username, password } = await req.json();
     await connectToDatabase();
     const newUser = await prisma.user.create({
       data: {
