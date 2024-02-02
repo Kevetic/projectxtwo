@@ -32,7 +32,7 @@ export default function Home() {
       });
 
       if (res.ok) {
-        console.log("Registered");
+        console.log("Registration Complete");
       }
     } catch (error) {
       console.log(error);
