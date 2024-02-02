@@ -5,10 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useGetQuestions } from "./api/questions";
 import Questions from "@/components/questions/Questions";
 import { ReloadIcon } from "@radix-ui/react-icons";
-import { signIn, useSession } from "next-auth/react";
 
 export default function Home() {
-  const { data: session } = useSession();
   const {
     quizzTopic,
     getQuestions,
@@ -23,7 +21,6 @@ export default function Home() {
   return (
     <main className="flex flex-col items-center space-y-10 justify-around h-screen">
       <div className="absolute right-0 p-5 top-0 items-center justify-center gap-2 flex">
-        <Button onClick={() => signIn()}> Sign In</Button>
         <ModeToggle />
       </div>
       {questionsArray.length == 0 ? (
