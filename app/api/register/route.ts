@@ -16,7 +16,10 @@ export async function POST(req: Request) {
     console.log(newUser);
     return NextResponse.json({ newUser }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ message: "error" }, { status: 500 });
+    return NextResponse.json(
+      { message: "error while registering" },
+      { status: 500 }
+    );
   } finally {
     await prisma.$disconnect();
   }
