@@ -9,12 +9,9 @@ import { signOut, useSession } from "next-auth/react";
 
 export default function Home() {
   const { data: session } = useSession();
-
   let email = session?.user?.email;
   let name = session?.user?.name;
   let image = session?.user?.image;
-  let username = session?.user?.username;
-  let password = session?.user?.password;
 
   const getUser = async () => {
     try {
@@ -27,15 +24,13 @@ export default function Home() {
           name,
           email,
           image,
-          username,
-          password,
         }),
       });
 
       console.log(res);
 
       if (res.ok) {
-        console.log(name, email, image, username, password);
+        console.log("Registered");
       }
     } catch (error) {
       console.log(error);
