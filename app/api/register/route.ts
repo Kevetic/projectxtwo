@@ -5,13 +5,15 @@ import { PrismaClient, Prisma } from "@prisma/client";
 const prisma = new PrismaClient();
 export async function POST(req: Request) {
   try {
-    const { name, email, image } = await req.json();
+    const { name, email, image, username, password } = await req.json();
     await connectToDatabase();
     const newUser = await prisma.user.create({
       data: {
         name,
         email,
         image,
+        username,
+        password,
       },
     });
     return NextResponse.json({ newUser }, { status: 201 });

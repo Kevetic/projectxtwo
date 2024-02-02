@@ -12,6 +12,8 @@ export default function Home() {
   let email = session?.user?.email;
   let name = session?.user?.name;
   let image = session?.user?.image;
+  let username = session?.user?.name;
+  let password = session?.user?.name;
 
   const getUser = async () => {
     try {
@@ -24,10 +26,10 @@ export default function Home() {
           name,
           email,
           image,
+          username,
+          password,
         }),
       });
-
-      console.log(res);
 
       if (res.ok) {
         console.log("Registered");
